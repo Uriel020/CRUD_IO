@@ -1,16 +1,20 @@
 import express, { json, Request, Response } from "express";
 import cors, { CorsOptions, StaticOrigin } from "cors";
-import { formRouter } from "./routes/forms.route";
+import morgan from 'morgan';
+import { formRouter } from "../routes/forms.route";
 const origin: StaticOrigin = [""];
 
 const app = express();
 
 app.use(json());
 
-//Cors config
+//Cors config --> diff ports connections
 const corsOptions: CorsOptions = { origin, credentials: true };
 
 app.use(cors(corsOptions));
+
+//Mogan config --> http requests 
+app.use(morgan('dev'));
 
 //Routes
 app.use(formRouter); //Form CRUD
