@@ -16,7 +16,7 @@ const formSchema = z.object({
     .string({
       required_error: "User is required",
     })
-    .uuid({ message: "Id must be uuid" }),
+    .uuid({ message: "Must be a valid UUID" }),
   title: z.string({
     required_error: "Title is required",
   }),
@@ -25,5 +25,14 @@ const formSchema = z.object({
   }),
   inputs: z.array(jsonSchema, { required_error: "Inputs are required" }),
 });
+
+const updateFormDTO = formSchema.partial().extend({
+  idForm: z
+    .string({ required_error: "Form is required" })
+    .uuid({ message: "Must be a valid UUID" }),
+});
+
+export type CreateUserDTO = z.infer<typeof formSchema>;
+export type UpdateUserDTO = z.infer<typeof updateFormDTO>;
 
 export default formSchema;
