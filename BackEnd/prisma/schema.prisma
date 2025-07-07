@@ -13,16 +13,29 @@ datasource db {
   url      = env("DATABASE_PUBLIC_URL")
 }
 
+model User {
+  idUser   String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  username String
+  password String
+  active Boolean @default(true)
+
+  Form Form[]
+
+  @@map("users")
+}
+
 model Form {
   idForm   String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   title    String
   inputs   Json
   endpoint String
-
   active Boolean @default(true)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  idUser String @db.Uuid
+  user   User   @relation(fields: [idUser], references: [idUser])
 
   @@map("forms")
 }
