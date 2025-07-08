@@ -14,10 +14,11 @@ datasource db {
 }
 
 model User {
-  idUser   String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  idUser   String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   username String
+  email    String  @unique
   password String
-  active Boolean @default(true)
+  active   Boolean @default(true)
 
   Form Form[]
 
@@ -25,11 +26,11 @@ model User {
 }
 
 model Form {
-  idForm   String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  idForm   String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   title    String
   inputs   Json
   endpoint String
-  active Boolean @default(true)
+  active   Boolean @default(true)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

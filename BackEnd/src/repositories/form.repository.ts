@@ -1,6 +1,6 @@
 import { db } from "../db/prismaClient";
 import { IForm } from "../interfaces/IForm";
-import { CreateUserDTO, UpdateUserDTO } from "../schemas/form.schema";
+import { CreateFormDTO, UpdateFormDTO } from "../schemas/form.schema";
 import { Prisma } from "@prisma/client";
 
 class FormRepository {
@@ -8,7 +8,7 @@ class FormRepository {
     return db.form.findMany({ where: { idUser: id, active: true } });
   }
 
-  async create(body: CreateUserDTO): Promise<IForm> {
+  async create(body: CreateFormDTO): Promise<IForm> {
     return db.form.create({
       data: {
         ...body,
@@ -17,7 +17,7 @@ class FormRepository {
     });
   }
 
-  async update(body: UpdateUserDTO): Promise<IForm> {
+  async update(body: UpdateFormDTO): Promise<IForm> {
     const { idForm, ...data } = body;
     return db.form.update({
       where: { idForm },

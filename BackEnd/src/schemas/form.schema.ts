@@ -32,7 +32,7 @@ const updateFormDTO = formSchema.partial().extend({
     .uuid({ message: "Must be a valid UUID" }),
 });
 
-export type CreateUserDTO = z.infer<typeof formSchema>;
-export type UpdateUserDTO = z.infer<typeof updateFormDTO>;
+export type CreateFormDTO = z.infer<typeof formSchema>;
+export type UpdateFormDTO = z.infer<typeof updateFormDTO>;
 
 export default formSchema;
