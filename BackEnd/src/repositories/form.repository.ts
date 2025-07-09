@@ -7,7 +7,6 @@ class FormRepository {
   async findAllByUser(id: string): Promise<IForm[]> {
     return db.form.findMany({ where: { idUser: id, active: true } });
   }
-
   async create(body: CreateFormDTO): Promise<IForm> {
     return db.form.create({
       data: {
@@ -16,7 +15,6 @@ class FormRepository {
       },
     });
   }
-
   async update(body: UpdateFormDTO): Promise<IForm> {
     const { idForm, ...data } = body;
     return db.form.update({
@@ -27,7 +25,6 @@ class FormRepository {
       },
     });
   }
-
   async delete(id: string): Promise<IForm> {
     return db.form.update({ data: { active: false }, where: { idForm: id } });
   }
