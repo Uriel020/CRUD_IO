@@ -5,11 +5,12 @@ import { CreateFormDTO, UpdateFormDTO } from "../schemas/form.schema";
 class FormController {
   private readonly formService = new FormService();
 
-  async getForms(req: Request, res: Response) {
+  async handleGetForms(req: Request, res: Response) {
     const { id } = req.params;
     try {
-      if (!id)
-        return res.json(400).json({ error: "Invalid or missing user id" });
+      if (!id) {
+        return res.status(400).json({ error: "Invalid or missing user id" });
+      }
       const forms = await this.formService.getFormsOwnedByUser(id);
       return res.status(200).json(forms);
     } catch (error) {
@@ -19,11 +20,11 @@ class FormController {
     }
   }
 
-  async createForm(req: Request, res: Response) {
+  async handleCreateForm(req: Request, res: Response) {
     const body = req.body as CreateFormDTO;
     try {
       const newForm = await this.formService.createFormForUser(body);
-      return newForm;
+      return res.status(201).json(newForm);
     } catch (error) {
       res
         .status(500)
@@ -31,11 +32,11 @@ class FormController {
     }
   }
 
-  async updateForm(req: Request, res: Response) {
+  async handleUpdateForm(req: Request, res: Response) {
     const body = req.body as UpdateFormDTO;
     try {
-      const newForm = await this.formService.updateFormDetails(body);
-      return newForm;
+      const updatedForm = await this.formService.updateFormDetails(body);
+      return res.status(200).json(updatedForm);
     } catch (error) {
       res
         .status(500)
@@ -43,13 +44,14 @@ class FormController {
     }
   }
 
-  async deleteForms(req: Request, res: Response) {
+  async handleDeleteForm(req: Request, res: Response) {
     const { id } = req.params;
     try {
-      if (!id)
-        return res.json(400).json({ error: "Invalid or missing form id" });
-      const forms = await this.formService.softDeleteForm(id);
-      return res.status(200).json(forms);
+      if (!id) {
+        return res.status(400).json({ error: "Invalid or missing form id" });
+      }
+      const deletedForm = await this.formService.softDeleteForm(id);
+      return res.status(200).json(deletedForm);
     } catch (error) {
       res
         .status(500)
