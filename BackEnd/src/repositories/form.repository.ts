@@ -4,8 +4,11 @@ import { CreateFormDTO, UpdateFormDTO } from "../schemas/form.schema";
 import { Prisma } from "@prisma/client";
 
 class FormRepository {
-  async findAllByUser(id: string): Promise<IForm[]> {
-    return db.form.findMany({ where: { idUser: id, active: true } });
+  async findAllByUser(idUser: string): Promise<IForm[]> {
+    return db.form.findMany({ where: { idUser, active: true } });
+  }
+  async findById(idForm: string): Promise<IForm | null> {
+    return db.form.findUnique({ where: { idForm } });
   }
   async create(body: CreateFormDTO): Promise<IForm> {
     return db.form.create({

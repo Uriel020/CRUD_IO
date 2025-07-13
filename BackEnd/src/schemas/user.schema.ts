@@ -22,9 +22,12 @@ const updateUserDTO = userSchema.partial().extend({
     .uuid({ message: "Must be a valid UUID" }),
 });
 
+const loginUser = userSchema.omit({ username: true });
+
 type CreateUserDTO = z.infer<typeof userSchema>;
 type UpdateUserDTO = z.infer<typeof updateUserDTO>;
+type LoginUser = z.infer<typeof loginUser>;
 
-export { CreateUserDTO, UpdateUserDTO };
+export { CreateUserDTO, UpdateUserDTO, LoginUser };
 
 export default userSchema;

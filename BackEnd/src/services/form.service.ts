@@ -10,36 +10,36 @@ class FormService {
   ) {}
 
   async getFormsOwnedByUser(idUser: string): Promise<IForm[]> {
-    const validatedUser = await this.validateUser(idUser);
+    await this.validateUser(idUser);
 
-    if (!validatedUser) throw new Error("Invalid or missing id user");
-
-    const forms = await this.formRepo.findAllByUser(idUser);
-    return forms;
+    return this.formRepo.findAllByUser(idUser);
   }
 
   async createFormForUser(body: CreateFormDTO): Promise<IForm> {
-    const validatedUser = await this.validateUser(body.idUser);
+    await this.validateUser(body.idUser);
 
-    if (!validatedUser) throw new Error("Invalid or missing id user");
-
-    const newForm = await this.formRepo.create(body);
-    return newForm;
+    return this.formRepo.create(body);
   }
 
-  async updateFormDetails(body: UpdateFormDTO): Promise<IForm> {
-    const updatedForm = await this.formRepo.update(body);
-    return updatedForm;
+  async modifyFormDetails(body: UpdateFormDTO): Promise<IForm> {
+    const { idForm } = body;
+    await this.validateForm(idForm);
+    return this.formRepo.update(body);
   }
 
   async softDeleteForm(idForm: string): Promise<IForm> {
-    const deletedForm = await this.formRepo.delete(idForm);
-    return deletedForm;
+    await this.validateForm(idForm);
+    return this.formRepo.delete(idForm);
   }
 
-  private async validateUser(idUser: string): Promise<boolean> {
+  private async validateUser(idUser: string): Promise<void> {
     const isUser = await this.userRepo.findById(idUser);
-    return !!isUser;
+    if (!isUser) throw new Error("Invalid or missing user ID");
+  }
+
+  private async validateForm(idForm: string): Promise<void> {
+    const formExists = await this.formRepo.findById(idForm);
+    if (!formExists) throw new Error("Form doesn't exists");
   }
 }
 

@@ -35,7 +35,7 @@ class FormController {
   async handleUpdateForm(req: Request, res: Response) {
     const body = req.body as UpdateFormDTO;
     try {
-      const updatedForm = await this.formService.updateFormDetails(body);
+      const updatedForm = await this.formService.modifyFormDetails(body);
       return res.status(200).json(updatedForm);
     } catch (error) {
       res
