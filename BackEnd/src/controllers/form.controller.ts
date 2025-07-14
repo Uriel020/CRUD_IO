@@ -5,7 +5,7 @@ import { CreateFormDTO, UpdateFormDTO } from "../schemas/form.schema";
 class FormController {
   private readonly formService = new FormService();
 
-  async handleGetForms(req: Request, res: Response) {
+  async handleGetForms(req: Request, res: Response): Promise<any> {
     const { id } = req.params;
     try {
       if (!id) {
@@ -20,7 +20,7 @@ class FormController {
     }
   }
 
-  async handleCreateForm(req: Request, res: Response) {
+  async handleCreateForm(req: Request, res: Response): Promise<any> {
     const body = req.body as CreateFormDTO;
     try {
       const newForm = await this.formService.createFormForUser(body);
@@ -32,7 +32,7 @@ class FormController {
     }
   }
 
-  async handleUpdateForm(req: Request, res: Response) {
+  async handleUpdateForm(req: Request, res: Response): Promise<any> {
     const body = req.body as UpdateFormDTO;
     try {
       const updatedForm = await this.formService.modifyFormDetails(body);
@@ -44,7 +44,7 @@ class FormController {
     }
   }
 
-  async handleDeleteForm(req: Request, res: Response) {
+  async handleDeleteForm(req: Request, res: Response): Promise<any> {
     const { id } = req.params;
     try {
       if (!id) {

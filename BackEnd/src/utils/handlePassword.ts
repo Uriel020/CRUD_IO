@@ -1,4 +1,4 @@
-export async function handlePassword(
+async function handlePassword(
   receivedPassword: string,
   condition: Condition,
   userPassword?: string
@@ -16,7 +16,9 @@ export async function handlePassword(
   return isUser;
 }
 
-export enum Condition {
+enum Condition {
   Hash = "hash",
   Verify = "verify",
 }
+
+export { Condition, handlePassword };
