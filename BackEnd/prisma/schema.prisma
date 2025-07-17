@@ -20,17 +20,16 @@ model User {
   password String
   active   Boolean @default(true)
 
-  Form Form[]
+  form Form[]
 
   @@map("users")
 }
 
 model Form {
-  idForm   String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  title    String
-  inputs   Json
-  endpoint String
-  active   Boolean @default(true)
+  idForm String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  title  String
+  inputs Json
+  active Boolean @default(true)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -38,5 +37,19 @@ model Form {
   idUser String @db.Uuid
   user   User   @relation(fields: [idUser], references: [idUser])
 
+  idEndpoint String   @db.Uuid
+  endpoint   Endpoint @relation(fields: [idEndpoint], references: [idEndpoint])
+
   @@map("forms")
+}
+
+model Endpoint {
+  idEndpoint String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  delete     String
+  softDelete String
+  update     String
+  create     String
+  find       String
+
+  form Form[]
 }
