@@ -20,15 +20,14 @@ model User {
   password String
   active   Boolean @default(true)
 
-  form Form[]
+  resource Resource[]
 
   @@map("users")
 }
 
-model Form {
-  idForm String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+model Resource {
+  idResources String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   title  String
-  inputs Json
   active Boolean @default(true)
 
   createdAt DateTime @default(now())
@@ -37,10 +36,10 @@ model Form {
   idUser String @db.Uuid
   user   User   @relation(fields: [idUser], references: [idUser])
 
-  idEndpoint String   @db.Uuid
-  endpoint   Endpoint @relation(fields: [idEndpoint], references: [idEndpoint])
+  idEndpoint String    @unique @db.Uuid
+  endpoint   Endpoint? @relation()
 
-  @@map("forms")
+  @@map("resources")
 }
 
 model Endpoint {
@@ -51,5 +50,11 @@ model Endpoint {
   create     String
   find       String
 
-  form Form[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  resource Resource @relation(fields: [idEndpoint], references: [idEndpoint])
+
+  @@map("endpoints")
+
 }
