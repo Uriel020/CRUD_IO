@@ -16,7 +16,7 @@ const userSchema = z.object({
     .email({ message: "Insert a valid email" }),
 });
 
-const updateUserDTO = userSchema.partial().extend({
+const updateUser = userSchema.partial().extend({
   idUser: z
     .string({ required_error: "User is required" })
     .uuid({ message: "Must be a valid UUID" }),
@@ -25,7 +25,7 @@ const updateUserDTO = userSchema.partial().extend({
 const loginUser = userSchema.omit({ username: true });
 
 type CreateUserDTO = z.infer<typeof userSchema>;
-type UpdateUserDTO = z.infer<typeof updateUserDTO>;
+type UpdateUserDTO = z.infer<typeof updateUser>;
 type LoginUser = z.infer<typeof loginUser>;
 
 export { CreateUserDTO, UpdateUserDTO, LoginUser };

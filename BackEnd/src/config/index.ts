@@ -1,8 +1,9 @@
 import express, { json, Request, Response } from "express";
 import cors, { CorsOptions, StaticOrigin } from "cors";
 import morgan from 'morgan';
-import { formRouter } from "../routes/forms.route";
-const origin: StaticOrigin = [""];
+import { resourceRouter } from "../routes/resource.route";
+
+const origin: StaticOrigin = [""]; //pending
 
 const app = express();
 
@@ -13,11 +14,11 @@ const corsOptions: CorsOptions = { origin, credentials: true };
 
 app.use(cors(corsOptions));
 
-//Mogan config --> http requests 
+//Morgan config --> http requests 
 app.use(morgan('dev'));
 
 //Routes
-app.use(formRouter); //Form CRUD
+app.use(resourceRouter); //resource CRUD
 
 //Home route
 app.get("/", (req: Request, res: Response) => {

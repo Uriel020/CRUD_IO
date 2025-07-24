@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import FormService from "../services/form.service";
-import { CreateFormDTO, UpdateFormDTO } from "../schemas/form.schema";
+import FormService from "../services/resource.service";
+import { CreateResourceDTO, UpdateResourceDTO } from "../schemas/resource.schema";
 
 class FormController {
   private readonly formService = new FormService();
@@ -11,7 +11,7 @@ class FormController {
       if (!id) {
         return res.status(400).json({ error: "Invalid or missing user id" });
       }
-      const forms = await this.formService.getFormsOwnedByUser(id);
+      const forms = await this.formService.getResourcesOwnedByUser(id);
       return res.status(200).json(forms);
     } catch (error) {
       res
@@ -21,9 +21,9 @@ class FormController {
   }
 
   async handleCreateForm(req: Request, res: Response): Promise<any> {
-    const body = req.body as CreateFormDTO;
+    const body = req.body as CreateResourceDTO;
     try {
-      const newForm = await this.formService.createFormForUser(body);
+      const newForm = await this.formService.createResourceForUser(body);
       return res.status(201).json(newForm);
     } catch (error) {
       res
@@ -33,9 +33,9 @@ class FormController {
   }
 
   async handleUpdateForm(req: Request, res: Response): Promise<any> {
-    const body = req.body as UpdateFormDTO;
+    const body = req.body as UpdateResourceDTO;
     try {
-      const updatedForm = await this.formService.modifyFormDetails(body);
+      const updatedForm = await this.formService.modifyResourceDetails(body);
       return res.status(200).json(updatedForm);
     } catch (error) {
       res
@@ -50,7 +50,7 @@ class FormController {
       if (!id) {
         return res.status(400).json({ error: "Invalid or missing form id" });
       }
-      const deletedForm = await this.formService.softDeleteForm(id);
+      const deletedForm = await this.formService.softDeleteResource(id);
       return res.status(200).json(deletedForm);
     } catch (error) {
       res
