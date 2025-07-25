@@ -5,7 +5,7 @@ import {
   UpdateResourceDTO,
 } from "../schemas/resource.schema";
 
-class FormRepository {
+class ResourceRepository {
   async findAllByUser(idUser: string): Promise<IResource[]> {
     return db.resource.findMany({ where: { idUser, active: true } });
   }
@@ -36,4 +36,4 @@ class FormRepository {
   }
 }
 
-export default FormRepository;
+export default ResourceRepository;

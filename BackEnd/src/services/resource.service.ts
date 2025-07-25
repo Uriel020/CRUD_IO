@@ -6,7 +6,7 @@ import {
   UpdateResourceDTO,
 } from "../schemas/resource.schema";
 
-class FormService {
+class ResourceService {
   constructor(
     private readonly resourceRepo = new ResourceRepository(),
     private readonly userRepo = new UserRepository()
@@ -46,4 +46,4 @@ class FormService {
   }
 }
 
-export default FormService;
+export default ResourceService;
