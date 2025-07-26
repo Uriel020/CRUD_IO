@@ -1,5 +1,5 @@
 import { db } from "../db/prismaClient";
-import { IResource } from "../interfaces/IResource";
+import { IResource } from "../types/resource";
 import {
   CreateResourceDTO,
   UpdateResourceDTO,

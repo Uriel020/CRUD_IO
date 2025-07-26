@@ -1,5 +1,5 @@
 import { db } from "../db/prismaClient";
-import { IUser } from "../interfaces/IUser";
+import { IUser } from "../types/user";
 import { CreateUserDTO, UpdateUserDTO } from "../schemas/user.schema";
 
 class UserRepository {

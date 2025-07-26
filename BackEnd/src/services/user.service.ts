@@ -1,4 +1,4 @@
-import { IUser } from "../interfaces/IUser";
+import { User } from "../types/user";
 import UserRepository from "../repositories/user.repository";
 import {
   CreateUserDTO,
@@ -16,7 +16,7 @@ if (!JWT_KEY) {
 class UserService {
   constructor(private readonly userRepo = new UserRepository()) {}
 
-  async registerUser(body: CreateUserDTO): Promise<IUser> {
+  async registerUser(body: CreateUserDTO): Promise<User> {
     const { password, ...data } = body;
     const hashPassword = (await handlePassword(
       password,
@@ -47,11 +47,11 @@ class UserService {
     return sessionToken;
   }
 
-  async modifyUser(body: UpdateUserDTO): Promise<IUser> {
+  async modifyUser(body: UpdateUserDTO): Promise<User> {
     return this.userRepo.update(body);
   }
 
-  async softDeleteUser(idUser: string): Promise<IUser> {
+  async softDeleteUser(idUser: string): Promise<User> {
     return this.userRepo.delete(idUser);
   }
 

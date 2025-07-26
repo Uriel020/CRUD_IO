@@ -4,6 +4,8 @@ import {
   CreateResourceDTO,
   UpdateResourceDTO,
 } from "../schemas/resource.schema";
+import { handleHttpError } from "../utils/handleHttpError";
+import { ErrorCode } from "../types/error-code";
 
 class ResourceController {
   private readonly resourceService = new ResourceService();
@@ -12,14 +14,12 @@ class ResourceController {
     const { id } = req.params;
     try {
       if (!id) {
-        return res.status(401).json({ error: "Invalid or missing user id" });
+        return res.status(ErrorCode.NotFound).json({ error: "Invalid or missing user id" });
       }
       const resources = await this.resourceService.getResourcesOwnedByUser(id);
-      return res.status(200).json(resources);
+      return res.status(ErrorCode.Ok).json(resources);
     } catch (error) {
-      res
-        .status(500)
-        .send(error instanceof Error ? error.message : "Unknown error");
+      handleHttpError(res, error);
     }
   }
 
@@ -29,11 +29,9 @@ class ResourceController {
       const newResource = await this.resourceService.createResourceForUser(
         body
       );
-      return res.status(201).json(newResource);
+      return res.status(ErrorCode.Created).json(newResource);
     } catch (error) {
-      res
-        .status(500)
-        .send(error instanceof Error ? error.message : "Unknown error");
+      handleHttpError(res, error);
     }
   }
 
@@ -43,11 +41,9 @@ class ResourceController {
       const updatedResource = await this.resourceService.modifyResourceDetails(
         body
       );
-      return res.status(200).json(updatedResource);
+      return res.status(ErrorCode.Ok).json(updatedResource);
     } catch (error) {
-      res
-        .status(500)
-        .send(error instanceof Error ? error.message : "Unknown error");
+      handleHttpError(res, error);
     }
   }
 
@@ -56,15 +52,13 @@ class ResourceController {
     try {
       if (!id) {
         return res
-          .status(401)
+          .status(ErrorCode.NotFound)
           .json({ error: "Invalid or missing resource id" });
       }
       const deletedResource = await this.resourceService.softDeleteResource(id);
-      return res.status(200).json(deletedResource);
+      return res.status(ErrorCode.Ok).json(deletedResource);
     } catch (error) {
-      res
-        .status(500)
-        .send(error instanceof Error ? error.message : "Unknown error");
+      handleHttpError(res, error);
     }
   }
 }
