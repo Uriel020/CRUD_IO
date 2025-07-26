@@ -5,6 +5,7 @@ import {
   CreateResourceDTO,
   UpdateResourceDTO,
 } from "../schemas/resource.schema";
+import HttpError, { ErrorCode } from "../utils/HttpError";
 
 class ResourceService {
   constructor(
@@ -37,12 +38,14 @@ class ResourceService {
 
   private async validateUser(idUser: string): Promise<void> {
     const isUser = await this.userRepo.findById(idUser);
-    if (!isUser) throw new Error("Invalid or missing user ID");
+    if (!isUser)
+      throw new HttpError(ErrorCode.Unauthorized, "Invalid or missing user ID");
   }
 
   private async validateResource(idResource: string): Promise<void> {
     const resourceExists = await this.resourceRepo.findById(idResource);
-    if (!resourceExists) throw new Error("Resource doesn't exists");
+    if (!resourceExists)
+      throw new HttpError(ErrorCode.NotFound, "Resource doesn't exists");
   }
 }
 
