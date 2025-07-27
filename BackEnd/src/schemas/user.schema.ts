@@ -1,6 +1,9 @@
 import { z } from "zod";
 
 const userSchema = z.object({
+  idUser: z
+    .string({ required_error: "User is required" })
+    .uuid({ message: "Must be a valid UUID" }),
   username: z.string({
     required_error: "Username is required",
   }),
@@ -16,18 +19,16 @@ const userSchema = z.object({
     .email({ message: "Insert a valid email" }),
 });
 
-const updateUser = userSchema.partial().extend({
-  idUser: z
-    .string({ required_error: "User is required" })
-    .uuid({ message: "Must be a valid UUID" }),
-});
-
+const createUser = userSchema.omit({ idUser: true });
+const updateUser = userSchema.partial();
 const loginUser = userSchema.omit({ username: true });
+const usersParams = userSchema.pick({ idUser: true });
 
-type CreateUserDTO = z.infer<typeof userSchema>;
+type CreateUserDTO = z.infer<typeof createUser>;
 type UpdateUserDTO = z.infer<typeof updateUser>;
+type UserParamsDTO = z.infer<typeof usersParams>;
 type LoginUser = z.infer<typeof loginUser>;
 
-export { CreateUserDTO, UpdateUserDTO, LoginUser };
+export { CreateUserDTO, UpdateUserDTO, LoginUser, UserParamsDTO };
 
 export default userSchema;

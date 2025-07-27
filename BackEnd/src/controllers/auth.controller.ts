@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import UserService from "../services/user.service";
 import { LoginUser } from "../schemas/user.schema";
+import { handleHttpError } from "../utils/handleHttpError";
 
 class AuthController {
   private readonly userService = new UserService();
@@ -10,14 +11,12 @@ class AuthController {
     try {
       return await this.userService.login(body);
     } catch (error) {
-      res
-        .status(500)
-        .send(error instanceof Error ? error.message : "Unknown error");
+      return handleHttpError(res, error);
     }
   }
-  async handleCreateUser(req: Request, res: Response): Promise<any> {}
+  async handleRegisterUser(req: Request, res: Response): Promise<any> {}
   async handleUpdateUser(req: Request, res: Response): Promise<any> {}
-  async handleDeleteUser(req: Request, res: Response): Promise<any> {}
+  async handleSoftDeleteUser(req: Request, res: Response): Promise<any> {}
 }
 
 export default AuthController;

@@ -7,6 +7,8 @@ import {
 } from "../schemas/user.schema";
 import jwt from "jsonwebtoken";
 import { Condition, handlePassword } from "../utils/handlePassword";
+import HttpError from "../utils/HttpError";
+import { ErrorCode } from "../types/error-code";
 const { JWT_KEY } = process.env;
 
 if (!JWT_KEY) {
@@ -29,7 +31,7 @@ class UserService {
 
     const userFounded = await this.userRepo.findByEmail(email);
     if (!userFounded) {
-      throw new Error("User doesn't exists");
+      throw new HttpError(ErrorCode.NotFound, "User doesn't exists");
     }
 
     const isUser = await handlePassword(
@@ -39,10 +41,13 @@ class UserService {
     );
 
     if (!isUser) {
-      throw new Error("Invalid credentials");
+      throw new HttpError(ErrorCode.Unauthorized, "Invalid credentials");
     }
 
-    const sessionToken = jwt.sign({id: userFounded.idUser}, JWT_KEY as string);
+    const sessionToken = jwt.sign(
+      { id: userFounded.idUser },
+      JWT_KEY as string
+    );
 
     return sessionToken;
   }
@@ -52,7 +57,7 @@ class UserService {
   }
 
   async softDeleteUser(idUser: string): Promise<User> {
-    return this.userRepo.delete(idUser);
+    return this.userRepo.softDelete(idUser);
   }
 
   async userExists(email: string): Promise<boolean> {

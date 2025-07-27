@@ -1,5 +1,5 @@
 import { Resource } from "../types/resource";
-import {ErrorCode} from '../types/error-code';
+import { ErrorCode } from "../types/error-code";
 import ResourceRepository from "../repositories/resource.repository";
 import UserRepository from "../repositories/user.repository";
 import {
@@ -26,13 +26,17 @@ class ResourceService {
     return this.resourceRepo.create(body);
   }
 
-  async modifyResourceDetails(body: UpdateResourceDTO): Promise<Resource> {
-    const { idResource } = body;
+  async modifyResourceDetails(idResource: string, body: UpdateResourceDTO): Promise<Resource> {
     await this.validateResource(idResource);
-    return this.resourceRepo.update(body);
+    return this.resourceRepo.update(idResource, body);
   }
 
   async softDeleteResource(idResource: string): Promise<Resource> {
+    await this.validateResource(idResource);
+    return this.resourceRepo.softDelete(idResource);
+  }
+
+  async deleteResource(idResource: string): Promise<Resource> {
     await this.validateResource(idResource);
     return this.resourceRepo.delete(idResource);
   }

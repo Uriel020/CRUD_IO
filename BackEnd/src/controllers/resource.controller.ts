@@ -3,23 +3,25 @@ import ResourceService from "../services/resource.service";
 import {
   CreateResourceDTO,
   UpdateResourceDTO,
+  ParamsResourceDTO,
 } from "../schemas/resource.schema";
 import { handleHttpError } from "../utils/handleHttpError";
 import { ErrorCode } from "../types/error-code";
+import { UserParamsDTO } from "../schemas/user.schema";
 
 class ResourceController {
   private readonly resourceService = new ResourceService();
 
   async handleGetResources(req: Request, res: Response): Promise<any> {
-    const { id } = req.params;
+    const { idUser } = req.params as UserParamsDTO;
     try {
-      if (!id) {
-        return res.status(ErrorCode.NotFound).json({ error: "Invalid or missing user id" });
+      if (!idUser) {
+        return handleHttpError(res, "Invalid or missing resource id");
       }
-      const resources = await this.resourceService.getResourcesOwnedByUser(id);
+      const resources = await this.resourceService.getResourcesOwnedByUser(idUser);
       return res.status(ErrorCode.Ok).json(resources);
     } catch (error) {
-      handleHttpError(res, error);
+      return handleHttpError(res, error);
     }
   }
 
@@ -31,34 +33,37 @@ class ResourceController {
       );
       return res.status(ErrorCode.Created).json(newResource);
     } catch (error) {
-      handleHttpError(res, error);
+      return handleHttpError(res, error);
     }
   }
 
   async handleUpdateResource(req: Request, res: Response): Promise<any> {
     const body = req.body as UpdateResourceDTO;
+    const { idResource } = req.params as ParamsResourceDTO;
     try {
+      if (!idResource) {
+        return handleHttpError(res, "Invalid or missing resource id");
+      }
       const updatedResource = await this.resourceService.modifyResourceDetails(
+        idResource,
         body
       );
       return res.status(ErrorCode.Ok).json(updatedResource);
     } catch (error) {
-      handleHttpError(res, error);
+      return handleHttpError(res, error);
     }
   }
 
-  async handleDeleteResource(req: Request, res: Response): Promise<any> {
-    const { id } = req.params;
+  async handleSoftDeleteResource(req: Request, res: Response): Promise<any> {
+    const { idResource } = req.params as ParamsResourceDTO;
     try {
-      if (!id) {
-        return res
-          .status(ErrorCode.NotFound)
-          .json({ error: "Invalid or missing resource id" });
+      if (!idResource) {
+        return handleHttpError(res, "Invalid or missing resource id");
       }
-      const deletedResource = await this.resourceService.softDeleteResource(id);
+      const deletedResource = await this.resourceService.softDeleteResource(idResource);
       return res.status(ErrorCode.Ok).json(deletedResource);
     } catch (error) {
-      handleHttpError(res, error);
+      return handleHttpError(res, error);
     }
   }
 }
