@@ -8,7 +8,7 @@ import {
 import jwt from "jsonwebtoken";
 import { Condition, handlePassword } from "../utils/handlePassword";
 import HttpError from "../utils/HttpError";
-import { ErrorCode } from "../types/error-code";
+import { ErrorCode } from "../types/errorCode";
 const { JWT_KEY } = process.env;
 
 if (!JWT_KEY) {

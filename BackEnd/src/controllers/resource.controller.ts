@@ -6,7 +6,7 @@ import {
   ParamsResourceDTO,
 } from "../schemas/resource.schema";
 import { handleHttpError } from "../utils/handleHttpError";
-import { ErrorCode } from "../types/error-code";
+import { ErrorCode } from "../types/errorCode";
 import { UserParamsDTO } from "../schemas/user.schema";
 
 class ResourceController {

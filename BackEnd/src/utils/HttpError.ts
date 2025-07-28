@@ -1,4 +1,4 @@
-import {ErrorCode} from '../types/error-code';
+import {ErrorCode} from '../types/errorCode';
 
 class HttpError extends Error {
   public readonly code: ErrorCode;

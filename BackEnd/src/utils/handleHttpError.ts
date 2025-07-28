@@ -1,5 +1,5 @@
 import HttpError from "./HttpError";
-import { ErrorCode } from "../types/error-code";
+import { ErrorCode } from "../types/errorCode";
 import { Response } from "express";
 
 export function handleHttpError(res: Response, error: unknown) {
