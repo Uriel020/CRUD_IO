@@ -7,7 +7,7 @@ const resourceSchema = z.object({
   title: z.string({ required_error: "" }),
   idEndpoint: z
     .string({ required_error: "Endpoints are required" })
-    .uuid({ message: "Must be a valid UUID" }),
+    .uuid({ message: "Must be a valid UUID" }).trim(),
   idUser: z
     .string({
       required_error: "User is required",
@@ -23,6 +23,13 @@ type CreateResourceDTO = z.infer<typeof createResource>;
 type UpdateResourceDTO = z.infer<typeof updateResource>;
 type ParamsResourceDTO = z.infer<typeof resourceParams>;
 
-export { UpdateResourceDTO, CreateResourceDTO, ParamsResourceDTO };
+export {
+  createResource,
+  updateResource,
+  resourceParams,
+  UpdateResourceDTO,
+  CreateResourceDTO,
+  ParamsResourceDTO,
+};
 
 export default resourceSchema;

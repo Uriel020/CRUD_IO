@@ -4,7 +4,7 @@ import { SchemaType } from "../types/schemaType";
 
 const validatorSchema =
   (schema: ZodSchema, type: SchemaType) =>
-  (req: Request, res: Response, next: NextFunction) => {
+  (req: Request, res: Response, next: NextFunction): any => {
     try {
       switch (type) {
         case SchemaType.body:
