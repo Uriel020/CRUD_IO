@@ -1,10 +1,10 @@
 import { NextFunction, Request, Response } from "express";
-import { ZodSchema } from "zod";
+import { ZodSchema, ZodError } from "zod";
 import { SchemaType } from "../types/schemaType";
 
 const validatorSchema =
   (schema: ZodSchema, type: SchemaType) =>
-  (req:Request, res: Response, next: NextFunction) => {
+  (req: Request, res: Response, next: NextFunction) => {
     try {
       switch (type) {
         case SchemaType.body:
@@ -18,7 +18,11 @@ const validatorSchema =
     } catch (error) {
       return res
         .status(400)
-        .json(error instanceof Error ? error.message : "Unknown error");
+        .json(
+          error instanceof ZodError
+            ? error.errors.map((e) => e.message)
+            : ["Unknown error"]
+        );
     }
   };
 export { validatorSchema };
