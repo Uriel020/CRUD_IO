@@ -2,9 +2,11 @@ import HttpError from "./HttpError";
 import { ErrorCode } from "../types/errorCode";
 import { Response } from "express";
 
-export function handleHttpError(res: Response, error: unknown) {
+function handleHttpError(res: Response, error: unknown) {
   const code =
     error instanceof HttpError ? error.code : ErrorCode.InternalServerError;
   const message = error instanceof HttpError ? error.message : "Unknown error";
   return res.status(code).json(message);
 }
+
+export { handleHttpError };
