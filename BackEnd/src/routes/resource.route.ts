@@ -18,7 +18,7 @@ const {
 } = new ResourceController();
 
 router.get(
-  "/resource/:idUser",
+  "/resources/:idUser",
   validatorSchema(usersParams, SchemaType.params),
   handleGetResources
 );
