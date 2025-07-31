@@ -8,7 +8,7 @@ import {
 import jwt from "jsonwebtoken";
 import { Condition, handlePassword } from "../utils/handlePassword";
 import HttpError from "../utils/HttpError";
-import { ErrorCode } from "../types/errorCode";
+import { HttpCode } from "../types/httpCode";
 const { JWT_KEY } = process.env;
 
 if (!JWT_KEY) {
@@ -31,7 +31,7 @@ class UserService {
 
     const userFounded = await this.userRepo.findByEmail(email);
     if (!userFounded) {
-      throw new HttpError(ErrorCode.NotFound, "User doesn't exists");
+      throw new HttpError(HttpCode.NotFound, "User doesn't exists");
     }
 
     const isUser = await handlePassword(
@@ -41,7 +41,7 @@ class UserService {
     );
 
     if (!isUser) {
-      throw new HttpError(ErrorCode.Unauthorized, "Invalid credentials");
+      throw new HttpError(HttpCode.Unauthorized, "Invalid credentials");
     }
 
     const sessionToken = jwt.sign(

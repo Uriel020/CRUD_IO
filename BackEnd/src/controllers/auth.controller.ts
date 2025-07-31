@@ -1,20 +1,33 @@
 import { Request, Response } from "express";
 import UserService from "../services/user.service";
-import { LoginUser } from "../schemas/user.schema";
+import { CreateUserDTO, LoginUser } from "../schemas/user.schema";
 import { handleHttpError } from "../utils/handleHttpError";
+import { HttpCode } from "../types/httpCode";
 
 class AuthController {
   private readonly userService = new UserService();
 
   async handleLogin(req: Request, res: Response): Promise<any> {
     const body: LoginUser = req.body;
+
     try {
-      return await this.userService.login(body);
+       
+      const token: string = await this.userService.login(body);
+
+      return res.status(HttpCode.Accepted).json(token);
+
     } catch (error) {
       return handleHttpError(res, error);
     }
   }
-  async handleRegisterUser(req: Request, res: Response): Promise<any> {}
+  async handleRegisterUser(req: Request, res: Response): Promise<any> {
+    const body: CreateUserDTO = req.body;
+    try {
+      
+    } catch (error) {
+      
+    }
+  }
   async handleUpdateUser(req: Request, res: Response): Promise<any> {}
   async handleSoftDeleteUser(req: Request, res: Response): Promise<any> {}
 }

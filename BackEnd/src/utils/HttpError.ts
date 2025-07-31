@@ -1,10 +1,10 @@
-import {ErrorCode} from '../types/errorCode';
+import {HttpCode} from '../types/httpCode';
 
 class HttpError extends Error {
-  public readonly code: ErrorCode;
+  public readonly code: HttpCode;
   public readonly message: string;
 
-  constructor(code: ErrorCode, message: string) {
+  constructor(code: HttpCode, message: string) {
     super(message);
     this.code = code;
     this.message = message;

@@ -1,5 +1,5 @@
 import { Resource } from "../types/resource";
-import { ErrorCode } from "../types/errorCode";
+import { ErrorCode } from "../types/httpCode";
 import ResourceRepository from "../repositories/resource.repository";
 import UserRepository from "../repositories/user.repository";
 import {

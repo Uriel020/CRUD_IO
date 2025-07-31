@@ -1,10 +1,10 @@
 import HttpError from "./HttpError";
-import { ErrorCode } from "../types/errorCode";
+import { HttpCode } from "../types/httpCode";
 import { Response } from "express";
 
 function handleHttpError(res: Response, error: unknown) {
   const code =
-    error instanceof HttpError ? error.code : ErrorCode.InternalServerError;
+    error instanceof HttpError ? error.code : HttpCode.InternalServerError;
   const message = error instanceof HttpError ? error.message : "Unknown error";
   return res.status(code).json(message);
 }

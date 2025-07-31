@@ -6,7 +6,7 @@ import {
   ParamsResourceDTO,
 } from "../schemas/resource.schema";
 import { handleHttpError } from "../utils/handleHttpError";
-import { ErrorCode } from "../types/errorCode";
+import { HttpCode } from "../types/httpCode";
 import { UserParamsDTO } from "../schemas/user.schema";
 
 class ResourceController {
@@ -19,7 +19,7 @@ class ResourceController {
         return handleHttpError(res, "Invalid or missing resource id");
       }
       const resources = await this.resourceService.getResourcesOwnedByUser(idUser);
-      return res.status(ErrorCode.Ok).json(resources);
+      return res.status(HttpCode.Ok).json(resources);
     } catch (error) {
       return handleHttpError(res, error);
     }
@@ -31,7 +31,7 @@ class ResourceController {
       const newResource = await this.resourceService.createResourceForUser(
         body
       );
-      return res.status(ErrorCode.Created).json(newResource);
+      return res.status(HttpCode.Created).json(newResource);
     } catch (error) {
       return handleHttpError(res, error);
     }
@@ -48,7 +48,7 @@ class ResourceController {
         idResource,
         body
       );
-      return res.status(ErrorCode.Ok).json(updatedResource);
+      return res.status(HttpCode.Ok).json(updatedResource);
     } catch (error) {
       return handleHttpError(res, error);
     }
@@ -61,7 +61,7 @@ class ResourceController {
         return handleHttpError(res, "Invalid or missing resource id");
       }
       const deletedResource = await this.resourceService.softDeleteResource(idResource);
-      return res.status(ErrorCode.Ok).json(deletedResource);
+      return res.status(HttpCode.Ok).json(deletedResource);
     } catch (error) {
       return handleHttpError(res, error);
     }
