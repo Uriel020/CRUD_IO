@@ -12,9 +12,8 @@ class UserRepository {
   async create(body: CreateUserDTO): Promise<User> {
     return db.user.create({ data: body });
   }
-  async update(body: UpdateUserDTO): Promise<User> {
-    const { idUser, ...data } = body;
-    return db.user.update({ where: { idUser }, data });
+  async update(idUser: string, body: UpdateUserDTO): Promise<User> {
+    return db.user.update({ where: { idUser }, data: { ...body } });
   }
   async softDelete(idUser: string): Promise<User> {
     return db.user.update({ data: { active: false }, where: { idUser } });

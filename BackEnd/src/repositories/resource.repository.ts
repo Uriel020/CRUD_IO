@@ -21,7 +21,7 @@ class ResourceRepository {
   }
   async update(idResource: string, body: UpdateResourceDTO): Promise<Resource> {
     return db.resource.update({
-      where: { idResource },
+      where: {idResource },
       data: {
         ...body,
       },

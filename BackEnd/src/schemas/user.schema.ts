@@ -24,7 +24,7 @@ const userSchema = z.object({
 });
 
 const createUser = userSchema.omit({ idUser: true });
-const updateUser = userSchema.partial();
+const updateUser = userSchema.partial().omit({ idUser: true });
 const loginUser = userSchema.omit({ username: true, idUser: true });
 const usersParams = userSchema.pick({ idUser: true });
 

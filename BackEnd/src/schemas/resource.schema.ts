@@ -7,7 +7,8 @@ const resourceSchema = z.object({
   title: z.string({ required_error: "" }),
   idEndpoint: z
     .string({ required_error: "Endpoints are required" })
-    .uuid({ message: "Must be a valid UUID" }).trim(),
+    .uuid({ message: "Must be a valid UUID" })
+    .trim(),
   idUser: z
     .string({
       required_error: "User is required",
@@ -16,7 +17,7 @@ const resourceSchema = z.object({
 });
 
 const createResource = resourceSchema.omit({ idResource: true });
-const updateResource = resourceSchema.partial();
+const updateResource = resourceSchema.partial().omit({ idResource: true });
 const resourceParams = resourceSchema.pick({ idResource: true });
 
 type CreateResourceDTO = z.infer<typeof createResource>;

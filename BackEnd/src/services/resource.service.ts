@@ -1,5 +1,5 @@
 import { Resource } from "../types/resource";
-import { ErrorCode } from "../types/httpCode";
+import { HttpCode } from "../types/httpCode";
 import ResourceRepository from "../repositories/resource.repository";
 import UserRepository from "../repositories/user.repository";
 import {
@@ -44,13 +44,13 @@ class ResourceService {
   private async validateUser(idUser: string): Promise<void> {
     const isUser = await this.userRepo.findById(idUser);
     if (!isUser)
-      throw new HttpError(ErrorCode.NotFound, "Invalid or missing user ID");
+      throw new HttpError(HttpCode.NotFound, "Invalid or missing user ID");
   }
 
   private async validateResource(idResource: string): Promise<void> {
     const resourceExists = await this.resourceRepo.findById(idResource);
     if (!resourceExists)
-      throw new HttpError(ErrorCode.NotFound, "Resource doesn't exist");
+      throw new HttpError(HttpCode.NotFound, "Resource doesn't exist");
   }
 }
 

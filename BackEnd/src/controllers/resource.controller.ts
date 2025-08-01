@@ -18,7 +18,9 @@ class ResourceController {
       if (!idUser) {
         return handleHttpError(res, "Invalid or missing resource id");
       }
-      const resources = await this.resourceService.getResourcesOwnedByUser(idUser);
+      const resources = await this.resourceService.getResourcesOwnedByUser(
+        idUser
+      );
       return res.status(HttpCode.Ok).json(resources);
     } catch (error) {
       return handleHttpError(res, error);
@@ -31,7 +33,7 @@ class ResourceController {
       const newResource = await this.resourceService.createResourceForUser(
         body
       );
-      return res.status(HttpCode.Created).json(newResource);
+      return res.status(HttpCode.Created).json(newResource.title);
     } catch (error) {
       return handleHttpError(res, error);
     }
@@ -44,11 +46,8 @@ class ResourceController {
       if (!idResource) {
         return handleHttpError(res, "Invalid or missing resource id");
       }
-      const updatedResource = await this.resourceService.modifyResourceDetails(
-        idResource,
-        body
-      );
-      return res.status(HttpCode.Ok).json(updatedResource);
+      await this.resourceService.modifyResourceDetails(idResource, body);
+      return res.status(HttpCode.Ok).json(`${body.title} is updated`);
     } catch (error) {
       return handleHttpError(res, error);
     }
@@ -60,8 +59,8 @@ class ResourceController {
       if (!idResource) {
         return handleHttpError(res, "Invalid or missing resource id");
       }
-      const deletedResource = await this.resourceService.softDeleteResource(idResource);
-      return res.status(HttpCode.Ok).json(deletedResource);
+      await this.resourceService.softDeleteResource(idResource);
+      return res.status(HttpCode.Ok);
     } catch (error) {
       return handleHttpError(res, error);
     }

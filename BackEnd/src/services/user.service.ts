@@ -4,6 +4,7 @@ import {
   CreateUserDTO,
   LoginUser,
   UpdateUserDTO,
+  UserParamsDTO,
 } from "../schemas/user.schema";
 import jwt from "jsonwebtoken";
 import { Condition, handlePassword } from "../utils/handlePassword";
@@ -52,8 +53,8 @@ class UserService {
     return sessionToken;
   }
 
-  async modifyUser(body: UpdateUserDTO): Promise<User> {
-    return this.userRepo.update(body);
+  async modifyUser(idUser:string ,body: UpdateUserDTO): Promise<User> {
+    return this.userRepo.update(idUser, body);
   }
 
   async softDeleteUser(idUser: string): Promise<User> {
