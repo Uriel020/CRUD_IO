@@ -23,6 +23,9 @@ class AuthController {
       return handleHttpError(res, error);
     }
   }
+  // async handleProfile(req: Request, res: Response): Promise<any> {
+    
+  // }
   async handleRegisterUser(req: Request, res: Response): Promise<any> {
     const body = req.body as CreateUserDTO;
     try {

@@ -1,32 +1,31 @@
 import { Resource } from "../types/resource";
 import { HttpCode } from "../types/httpCode";
 import ResourceRepository from "../repositories/resource.repository";
-import UserRepository from "../repositories/user.repository";
 import {
   CreateResourceDTO,
   UpdateResourceDTO,
 } from "../schemas/resource.schema";
 import HttpError from "../utils/HttpError";
+import { validateUser } from "../utils/validateUser";
+import { FindType } from "../types/findType";
 
 class ResourceService {
-  constructor(
-    private readonly resourceRepo = new ResourceRepository(),
-    private readonly userRepo = new UserRepository()
-  ) {}
+  constructor(private readonly resourceRepo = new ResourceRepository()) {}
 
   async getResourcesOwnedByUser(idUser: string): Promise<Resource[]> {
-    await this.validateUser(idUser);
-
+    await validateUser(idUser, FindType.id);
     return this.resourceRepo.findAllByUser(idUser);
   }
 
   async createResourceForUser(body: CreateResourceDTO): Promise<Resource> {
-    await this.validateUser(body.idUser);
-
+    await validateUser(body.idUser, FindType.id);
     return this.resourceRepo.create(body);
   }
 
-  async modifyResourceDetails(idResource: string, body: UpdateResourceDTO): Promise<Resource> {
+  async modifyResourceDetails(
+    idResource: string,
+    body: UpdateResourceDTO
+  ): Promise<Resource> {
     await this.validateResource(idResource);
     return this.resourceRepo.update(idResource, body);
   }
@@ -41,16 +40,10 @@ class ResourceService {
     return this.resourceRepo.delete(idResource);
   }
 
-  private async validateUser(idUser: string): Promise<void> {
-    const isUser = await this.userRepo.findById(idUser);
-    if (!isUser)
-      throw new HttpError(HttpCode.NotFound, "Invalid or missing user ID");
-  }
-
   private async validateResource(idResource: string): Promise<void> {
     const resourceExists = await this.resourceRepo.findById(idResource);
     if (!resourceExists)
-      throw new HttpError(HttpCode.NotFound, "Resource doesn't exist");
+      throw new HttpError(HttpCode.NotFound, "Invalid or missing resource ID");
   }
 }
 
