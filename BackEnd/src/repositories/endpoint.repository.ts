@@ -2,8 +2,8 @@ import { db } from "../db/prismaClient";
 import {
   CreateEndpointDTO,
   UpdateEndpointDTO,
-} from "../schemas/enpoint.schema";
-import { Endpoint } from "../types/enpoint";
+} from "../schemas/endpoint.schema";
+import { Endpoint } from "../types/endpoint";
 
 class EndpointRepository {
   async findById(idEndpoint: string): Promise<Endpoint | null> {
