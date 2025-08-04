@@ -23,9 +23,16 @@ class AuthController {
       return handleHttpError(res, error);
     }
   }
-  // async handleProfile(req: Request, res: Response): Promise<any> {
-    
-  // }
+  async handleProfile(req: Request, res: Response): Promise<any> {
+    const { idUser } = req.params as UserParamsDTO;
+    try {
+      await this.userService.getProfile(idUser);
+      return res.status(HttpCode.Ok).json();
+    } catch (error) {
+      return handleHttpError(res, error);
+    }
+  }
+
   async handleRegisterUser(req: Request, res: Response): Promise<any> {
     const body = req.body as CreateUserDTO;
     try {
