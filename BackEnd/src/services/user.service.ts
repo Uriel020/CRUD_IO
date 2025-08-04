@@ -9,7 +9,7 @@ import jwt from "jsonwebtoken";
 import { Condition, handlePassword } from "../utils/handlePassword";
 import HttpError from "../utils/HttpError";
 import { HttpCode } from "../types/httpCode";
-import { FindType } from "../types/findType";
+import { FindType } from "../types/findUserType";
 import { validateUser } from "../utils/validateUser";
 const { JWT_KEY } = process.env;
 

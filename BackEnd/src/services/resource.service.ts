@@ -7,7 +7,7 @@ import {
 } from "../schemas/resource.schema";
 import HttpError from "../utils/HttpError";
 import { validateUser } from "../utils/validateUser";
-import { FindType } from "../types/findType";
+import { FindType } from "../types/findUserType";
 
 class ResourceService {
   constructor(private readonly resourceRepo = new ResourceRepository()) {}

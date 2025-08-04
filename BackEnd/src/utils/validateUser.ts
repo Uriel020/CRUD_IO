@@ -1,18 +1,18 @@
 import UserRepository from "../repositories/user.repository";
-import { FindType } from "../types/findType";
+import { FindUserType } from "../types/findUserType";
 import { User } from "../types/user";
 import { HttpCode } from "../types/httpCode";
 import HttpError from "./HttpError";
 
 const userRepo = new UserRepository();
 
-async function validateUser(data: string, type: FindType): Promise<User> {
+async function validateUser(data: string, type: FindUserType): Promise<User> {
   let userFounded;
   switch (type) {
-    case FindType.id:
+    case FindUserType.id:
       userFounded = await userRepo.findById(data);
       break;
-    case FindType.email:
+    case FindUserType.email:
       userFounded = await userRepo.findByEmail(data);
       break;
   }

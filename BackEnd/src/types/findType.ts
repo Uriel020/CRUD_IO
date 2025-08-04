@@ -1,4 +1,4 @@
 export enum FindType {
-    id,
-    email
-};
+  resource,
+  endpoint,
+}
