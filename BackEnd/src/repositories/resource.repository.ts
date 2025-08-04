@@ -21,10 +21,8 @@ class ResourceRepository {
   }
   async update(idResource: string, body: UpdateResourceDTO): Promise<Resource> {
     return db.resource.update({
-      where: {idResource },
-      data: {
-        ...body,
-      },
+      where: { idResource },
+      data: body,
     });
   }
   async softDelete(idResource: string): Promise<Resource> {

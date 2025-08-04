@@ -4,7 +4,7 @@ import {
   createUser,
   loginUser,
   updateUser,
-  usersParams,
+  userParams,
 } from "../schemas/user.schema";
 import { SchemaType } from "../types/schemaType";
 import AuthController from "../controllers/auth.controller";
@@ -26,17 +26,17 @@ router.post(
 router.post("/login", validatorSchema(loginUser, SchemaType.body), handleLogin);
 router.get(
   "profile/:id",
-  validatorSchema(usersParams, SchemaType.params),
+  validatorSchema(userParams, SchemaType.params),
   handleProfile
 );
 router.put(
   "user/:id",
-  validatorSchema(usersParams, SchemaType.params),
+  validatorSchema(userParams, SchemaType.params),
   validatorSchema(updateUser, SchemaType.body),
   handleUpdateUser
 );
 router.delete(
   "user/:id",
-  validatorSchema(usersParams, SchemaType.params),
+  validatorSchema(userParams, SchemaType.params),
   handleSoftDeleteUser
 );
