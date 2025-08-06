@@ -9,7 +9,7 @@ import jwt from "jsonwebtoken";
 import { Condition, handlePassword } from "../utils/handlePassword";
 import HttpError from "../utils/HttpError";
 import { HttpCode } from "../types/httpCode";
-import { FindType } from "../types/findUserType";
+import { FindUserType } from "../types/findUserType";
 import { validateUser } from "../utils/validateUser";
 const { JWT_KEY } = process.env;
 
@@ -31,7 +31,7 @@ class UserService {
   async login(body: LoginUser): Promise<string> {
     const { password, email } = body;
 
-    const userFounded = await validateUser(email, FindType.email);
+    const userFounded = await validateUser(email, FindUserType.email);
     if (!userFounded) {
       throw new HttpError(HttpCode.NotFound, "User doesn't exists");
     }
@@ -56,18 +56,18 @@ class UserService {
 
   //Still analyzing
   async getProfile(idUser: string): Promise<Partial<User>> {
-    const user = await validateUser(idUser, FindType.id);
+    const user = await validateUser(idUser, FindUserType.id);
     const { active, password, ...data } = user;
     return data;
   }
 
   async modifyUser(idUser: string, body: UpdateUserDTO): Promise<User> {
-    await validateUser(idUser, FindType.id);
+    await validateUser(idUser, FindUserType.id);
     return this.userRepo.update(idUser, body);
   }
 
   async softDeleteUser(idUser: string): Promise<User> {
-    await validateUser(idUser, FindType.id);
+    await validateUser(idUser, FindUserType.id);
     return this.userRepo.softDelete(idUser);
   }
 }

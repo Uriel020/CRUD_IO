@@ -29,4 +29,4 @@ async function validate(id: string, type: FindType): Promise<void> {
   }
 }
 
-export default { validate };
+export { validate };
