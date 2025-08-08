@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { validatorSchema } from "../middlewares/zodValidator.middleware";
+import { validateSchema } from "../middlewares/zodValidator.middleware";
 import {
   createUser,
   loginUser,
@@ -20,23 +20,23 @@ const {
 
 router.post(
   "/register",
-  validatorSchema(createUser, SchemaType.body),
+  validateSchema(createUser, SchemaType.body),
   handleRegisterUser
 );
-router.post("/login", validatorSchema(loginUser, SchemaType.body), handleLogin);
+router.post("/login", validateSchema(loginUser, SchemaType.body), handleLogin);
 router.get(
   "profile/:id",
-  validatorSchema(userParams, SchemaType.params),
+  validateSchema(userParams, SchemaType.params),
   handleProfile
 );
 router.put(
   "user/:id",
-  validatorSchema(userParams, SchemaType.params),
-  validatorSchema(updateUser, SchemaType.body),
+  validateSchema(userParams, SchemaType.params),
+  validateSchema(updateUser, SchemaType.body),
   handleUpdateUser
 );
 router.delete(
   "user/:id",
-  validatorSchema(userParams, SchemaType.params),
+  validateSchema(userParams, SchemaType.params),
   handleSoftDeleteUser
 );

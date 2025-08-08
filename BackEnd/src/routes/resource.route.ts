@@ -1,13 +1,13 @@
 import { Router } from "express";
 import ResourceController from "../controllers/resource.controller";
-import { validatorSchema } from "../middlewares/zodValidator.middleware";
+import { validateSchema } from "../middlewares/zodValidator.middleware";
 import {
   createResource,
   updateResource,
   resourceParams,
 } from "../schemas/resource.schema";
 import { SchemaType } from "../types/schemaType";
-import { usersParams } from "../schemas/user.schema";
+import { userParams } from "../schemas/user.schema";
 
 const router: Router = Router();
 const {
@@ -18,24 +18,24 @@ const {
 } = new ResourceController();
 
 router.get(
-  "/resources/:idUser",
-  validatorSchema(usersParams, SchemaType.params),
+  "/resources/:id",
+  validateSchema(userParams, SchemaType.params),
   handleGetResources
 );
 router.post(
   "/resource",
-  validatorSchema(createResource, SchemaType.body),
+  validateSchema(createResource, SchemaType.body),
   handleCreateResource
 );
 router.put(
-  "/resource/:idResource",
-  validatorSchema(resourceParams, SchemaType.params),
-  validatorSchema(updateResource, SchemaType.body),
+  "/resource/:id",
+  validateSchema(resourceParams, SchemaType.params),
+  validateSchema(updateResource, SchemaType.body),
   handleUpdateResource
 );
 router.delete(
-  "/resource/:idResource",
-  validatorSchema(resourceParams, SchemaType.params),
+  "/resource/:id",
+  validateSchema(resourceParams, SchemaType.params),
   handleSoftDeleteResource
 );
 

@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 const resourceSchema = z.object({
-  idResource: z
+  id: z
     .string({ required_error: "Resource are required" })
     .uuid({ message: "Must be a valid UUID" }),
   title: z.string({ required_error: "" }),
@@ -16,9 +16,9 @@ const resourceSchema = z.object({
     .uuid({ message: "Must be a valid UUID" }),
 });
 
-const createResource = resourceSchema.omit({ idResource: true });
-const updateResource = resourceSchema.partial().omit({ idResource: true });
-const resourceParams = resourceSchema.pick({ idResource: true });
+const createResource = resourceSchema.omit({ id: true });
+const updateResource = resourceSchema.partial().omit({ id: true });
+const resourceParams = resourceSchema.pick({ id: true });
 
 type CreateResourceDTO = z.infer<typeof createResource>;
 type UpdateResourceDTO = z.infer<typeof updateResource>;

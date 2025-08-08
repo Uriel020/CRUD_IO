@@ -24,9 +24,9 @@ class AuthController {
     }
   }
   async handleProfile(req: Request, res: Response): Promise<any> {
-    const { idUser } = req.params as UserParamsDTO;
+    const { id } = req.params as UserParamsDTO;
     try {
-      await this.userService.getProfile(idUser);
+      await this.userService.getProfile(id);
       return res.status(HttpCode.Ok).json();
     } catch (error) {
       return handleHttpError(res, error);
@@ -43,20 +43,20 @@ class AuthController {
     }
   }
   async handleUpdateUser(req: Request, res: Response): Promise<any> {
-    const { idUser } = req.params as UserParamsDTO;
+    const { id } = req.params as UserParamsDTO;
     const body = req.body as UpdateUserDTO;
 
     try {
-      await this.userService.modifyUser(idUser, body);
+      await this.userService.modifyUser(id, body);
       return res.status(HttpCode.Ok).json(`${body.username} is updated`);
     } catch (error) {
       return handleHttpError(res, error);
     }
   }
   async handleSoftDeleteUser(req: Request, res: Response): Promise<any> {
-    const { idUser } = req.params as UserParamsDTO;
+    const { id } = req.params as UserParamsDTO;
     try {
-      await this.userService.softDeleteUser(idUser);
+      await this.userService.softDeleteUser(id);
       return res.status(HttpCode.Ok);
     } catch (error) {
       return handleHttpError(res, error);

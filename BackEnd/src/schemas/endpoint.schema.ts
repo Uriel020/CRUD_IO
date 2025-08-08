@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 const endpointSchema = z.object({
-  idEndpoint: z
+  id: z
     .string({ required_error: "Endpoint is required" })
     .uuid({ message: "Must be a valid UUID" }),
   create: z.string({ required_error: "Create method is required" }),
@@ -11,9 +11,9 @@ const endpointSchema = z.object({
   delete: z.string({ required_error: "Delete method is required" }),
 });
 
-const createEndpoint = endpointSchema.omit({ idEndpoint: true });
-const updateEndpoint = endpointSchema.partial().omit({ idEndpoint: true });
-const endpointParams = endpointSchema.pick({ idEndpoint: true });
+const createEndpoint = endpointSchema.omit({ id: true });
+const updateEndpoint = endpointSchema.partial().omit({ id: true });
+const endpointParams = endpointSchema.pick({ id: true });
 
 type CreateEndpointDTO = z.infer<typeof createEndpoint>;
 type UpdateEndpointDTO = z.infer<typeof updateEndpoint>;

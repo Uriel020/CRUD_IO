@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { ZodSchema, ZodError } from "zod";
 import { SchemaType } from "../types/schemaType";
 
-const validatorSchema =
+const validateSchema =
   (schema: ZodSchema, type: SchemaType) =>
   (req: Request, res: Response, next: NextFunction): any => {
     try {
@@ -25,4 +25,4 @@ const validatorSchema =
         );
     }
   };
-export { validatorSchema };
+export { validateSchema };

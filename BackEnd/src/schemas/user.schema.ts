@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 const userSchema = z.object({
-  idUser: z
+  id: z
     .string({ required_error: "User is required" })
     .uuid({ message: "Must be a valid UUID" }),
   username: z
@@ -23,10 +23,10 @@ const userSchema = z.object({
     .email({ message: "Insert a valid email" }),
 });
 
-const createUser = userSchema.omit({ idUser: true });
-const updateUser = userSchema.partial().omit({ idUser: true });
-const loginUser = userSchema.omit({ username: true, idUser: true });
-const userParams = userSchema.pick({ idUser: true });
+const createUser = userSchema.omit({ id: true });
+const updateUser = userSchema.partial().omit({ id: true });
+const loginUser = userSchema.omit({ username: true, id: true });
+const userParams = userSchema.pick({ id: true });
 
 type CreateUserDTO = z.infer<typeof createUser>;
 type UpdateUserDTO = z.infer<typeof updateUser>;
