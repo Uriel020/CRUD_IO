@@ -10,9 +10,7 @@ import { validate } from "../utils/validate";
 class EndpointService {
   constructor(private readonly endpointRepo = new EndpointRepository()) {}
 
-  async getEndpoint(
-    idEndpoint: string
-  ): Promise<Endpoint | null> {
+  async getEndpoint(idEndpoint: string): Promise<Endpoint | null> {
     await validate(idEndpoint, FindType.endpoint);
     return this.endpointRepo.findById(idEndpoint);
   }
