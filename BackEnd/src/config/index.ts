@@ -2,6 +2,8 @@ import express, { json, Request, Response } from "express";
 import cors, { CorsOptions, StaticOrigin } from "cors";
 import morgan from 'morgan';
 import { resourceRouter } from "../routes/resource.route";
+import { endpointRouter } from "../routes/endpoint.route";
+import { authRouter } from "../routes/auth.route";
 
 const origin: StaticOrigin = [""]; //pending
 
@@ -18,8 +20,9 @@ app.use(cors(corsOptions));
 app.use(morgan('dev'));
 
 //Routes
+app.use(authRouter); //auth CRUD
 app.use(resourceRouter); //resource CRUD
-
+app.use(endpointRouter); //endpoint CRUD
 //Home route
 app.get("/", (req: Request, res: Response) => {
   res.send("<h1>Bienvenido a la API</h1>");

@@ -40,3 +40,5 @@ router.delete(
   validateSchema(userParams, SchemaType.params),
   handleSoftDeleteUser
 );
+
+export {router as authRouter}

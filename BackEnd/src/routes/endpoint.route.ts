@@ -38,3 +38,5 @@ router.delete(
   validateSchema(endpointParams, SchemaType.params),
   handleDeleteEndpoint
 );
+
+export {router as endpointRouter}
