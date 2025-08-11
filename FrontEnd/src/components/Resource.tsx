@@ -1,5 +1,5 @@
 function Resource() {
-    return (  '');
+  return "";
 }
 
 export default Resource;
