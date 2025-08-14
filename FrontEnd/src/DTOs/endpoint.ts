@@ -1,5 +1,4 @@
-export interface Endpoint {
-  idEndpoint: string;
+export interface EndpointDTO {
   delete: string;
   softDelete: string;
   update: string;

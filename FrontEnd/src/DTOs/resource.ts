@@ -1,5 +1,4 @@
-export interface Resource {
-  idResource: string;
+export interface ResourceDTO {
   idUser: string;
   idEndpoint: string;
   title: string;

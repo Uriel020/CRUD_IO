@@ -1,4 +1,4 @@
-import type { Resource } from "../types/resource";
+import type { ResourceDTO } from "../DTOs/resource";
 import axios from "./axiosConfig";
 
 class ResourceClient {
@@ -9,6 +9,9 @@ class ResourceClient {
     } catch (error) {
       return error instanceof Error ? error.message : "Unknown error";
     }
+  }
+  async createResource(body: ResourceDTO): Promise<any> {
+    const { status } = await axios.post("resource", { body });
   }
 }
 
