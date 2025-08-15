@@ -11,7 +11,25 @@ class ResourceClient {
     }
   }
   async createResource(body: ResourceDTO): Promise<any> {
-    const { status } = await axios.post("resource", { body });
+    try {
+      const { status } = await axios.post("resource", { body });
+    } catch (error) {
+      return error instanceof Error ? error.message : "Unknown error";
+    }
+  }
+  async updateResource(id: string, body: ResourceDTO): Promise<any> {
+    try {
+      const { status } = await axios.put(`resource/:${id}`, { body });
+    } catch (error) {
+      return error instanceof Error ? error.message : "Unknown error";
+    }
+  }
+  async deleteResource(id: string): Promise<any> {
+    try {
+      const { status } = await axios.delete(`resource/:${id}`);
+    } catch (error) {
+      return error instanceof Error ? error.message : "Unknown error";
+    }
   }
 }
 
