@@ -16,6 +16,7 @@ class AuthController {
     const body = req.body as LoginUser;
 
     try {
+
       const token: string = await this.userService.login(body);
 
       return res.status(HttpCode.Accepted).json(token);
