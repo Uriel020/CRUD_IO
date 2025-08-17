@@ -10,6 +10,10 @@ class AuthClient {
       return error instanceof Error ? error.message : "Unknown Error";
     }
   }
+
+  static logout(): void {
+    localStorage.removeItem("session");
+  }
 }
 
 export { AuthClient };
