@@ -1,4 +1,5 @@
 import type { LoginDTO } from "../DTOs/login";
+import type { RegisterDTO } from "../DTOs/register";
 import axios from "./axiosConfig";
 
 class AuthClient {
@@ -7,7 +8,15 @@ class AuthClient {
       const { data } = await axios.post("login", { body });
       localStorage.setItem("session", data);
     } catch (error) {
-      return error instanceof Error ? error.message : "Unknown Error";
+      return error instanceof Error ? error.message : "Unknown error";
+    }
+  }
+
+  async register(body: RegisterDTO): Promise<any> {
+    try {
+      await axios.post("register", { body });
+    } catch (error) {
+      return error instanceof Error ? error.message : "Unknown error";
     }
   }
 
