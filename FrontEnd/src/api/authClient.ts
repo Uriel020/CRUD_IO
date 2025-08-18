@@ -44,7 +44,7 @@ class AuthClient {
     }
   }
 
-  static logout(): void {
+  logout(): void {
     localStorage.removeItem("session");
   }
 }
