@@ -11,7 +11,7 @@ import { HttpCode } from "../types/httpCode";
 class EndpointController {
   private readonly endpointService = new EndpointService();
 
-  async handleGetEndpoint(req: Request, res: Response): Promise<any> {
+  handleGetEndpoint = async (req: Request, res: Response): Promise<any> => {
     const { id } = req.params as EndpointParamsDTO;
     try {
       if (!id) {
@@ -22,8 +22,8 @@ class EndpointController {
     } catch (error) {
       handleHttpError(res, error);
     }
-  }
-  async handleCreateEndpoint(req: Request, res: Response): Promise<any> {
+  };
+  handleCreateEndpoint = async (req: Request, res: Response): Promise<any> => {
     const body = req.body as CreateEndpointDTO;
 
     try {
@@ -32,8 +32,8 @@ class EndpointController {
     } catch (error) {
       handleHttpError(res, error);
     }
-  }
-  async handleUpdateEndpoint(req: Request, res: Response): Promise<any> {
+  };
+  handleUpdateEndpoint = async (req: Request, res: Response): Promise<any> => {
     const { id } = req.params as EndpointParamsDTO;
     const body = req.body as UpdateEndpointDTO;
     try {
@@ -42,8 +42,8 @@ class EndpointController {
     } catch (error) {
       handleHttpError(res, error);
     }
-  }
-  async handleDeleteEndpoint(req: Request, res: Response): Promise<any> {
+  };
+  handleDeleteEndpoint = async (req: Request, res: Response): Promise<any> => {
     const { id } = req.params as EndpointParamsDTO;
     try {
       await this.endpointService.deleteEndpoint(id);
@@ -51,7 +51,7 @@ class EndpointController {
     } catch (error) {
       handleHttpError(res, error);
     }
-  }
+  };
 }
 
 export default EndpointController;

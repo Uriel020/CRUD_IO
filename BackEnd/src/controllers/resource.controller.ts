@@ -12,22 +12,20 @@ import { UserParamsDTO } from "../schemas/user.schema";
 class ResourceController {
   private readonly resourceService = new ResourceService();
 
-  async handleGetResources(req: Request, res: Response): Promise<any> {
+  handleGetResources = async (req: Request, res: Response): Promise<any> => {
     const { id } = req.params as UserParamsDTO;
     try {
       if (!id) {
         return handleHttpError(res, "Invalid or missing resource id");
       }
-      const resources = await this.resourceService.getResourcesOwnedByUser(
-        id
-      );
+      const resources = await this.resourceService.getResourcesOwnedByUser(id);
       return res.status(HttpCode.Ok).json(resources);
     } catch (error) {
       return handleHttpError(res, error);
     }
-  }
+  };
 
-  async handleCreateResource(req: Request, res: Response): Promise<any> {
+  handleCreateResource = async (req: Request, res: Response): Promise<any> => {
     const body = req.body as CreateResourceDTO;
     try {
       const newResource = await this.resourceService.createResourceForUser(
@@ -37,9 +35,9 @@ class ResourceController {
     } catch (error) {
       return handleHttpError(res, error);
     }
-  }
+  };
 
-  async handleUpdateResource(req: Request, res: Response): Promise<any> {
+  handleUpdateResource = async (req: Request, res: Response): Promise<any> => {
     const body = req.body as UpdateResourceDTO;
     const { id } = req.params as ParamsResourceDTO;
     try {
@@ -51,9 +49,12 @@ class ResourceController {
     } catch (error) {
       return handleHttpError(res, error);
     }
-  }
+  };
 
-  async handleSoftDeleteResource(req: Request, res: Response): Promise<any> {
+  handleSoftDeleteResource = async (
+    req: Request,
+    res: Response
+  ): Promise<any> => {
     const { id } = req.params as ParamsResourceDTO;
     try {
       if (!id) {
@@ -64,7 +65,7 @@ class ResourceController {
     } catch (error) {
       return handleHttpError(res, error);
     }
-  }
+  };
 }
 
 export default ResourceController;

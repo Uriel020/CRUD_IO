@@ -20,7 +20,17 @@ if (!JWT_KEY) {
 class UserService {
   constructor(private readonly userRepo = new UserRepository()) {}
 
+  test(body: any) {
+    console.log(body);
+  }
+
   async registerUser(body: CreateUserDTO): Promise<User> {
+
+    const userFounded = await this.userRepo.findByEmail(body.email);
+
+    if (userFounded) {
+      throw new HttpError(HttpCode.Conflict, "User whit that email exist");
+    }
     const { password, ...data } = body;
     const hashPassword = (await handlePassword(
       password,

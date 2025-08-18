@@ -25,18 +25,18 @@ router.post(
 );
 router.post("/login", validateSchema(loginUser, SchemaType.body), handleLogin);
 router.get(
-  "profile/:id",
+  "/profile/:id",
   validateSchema(userParams, SchemaType.params),
   handleProfile
 );
 router.put(
-  "user/:id",
+  "/user/:id",
   validateSchema(userParams, SchemaType.params),
   validateSchema(updateUser, SchemaType.body),
   handleUpdateUser
 );
 router.delete(
-  "user/:id",
+  "/user/:id",
   validateSchema(userParams, SchemaType.params),
   handleSoftDeleteUser
 );
