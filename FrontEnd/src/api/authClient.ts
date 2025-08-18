@@ -20,6 +20,30 @@ class AuthClient {
     }
   }
 
+  async getProfile(id: string) {
+    try {
+      await axios.get(`profile/:${id}`);
+    } catch (error) {
+      return error instanceof Error ? error.message : "Unknown error";
+    }
+  }
+
+  async updateUser(id: string, body: Partial<RegisterDTO>) {
+    try {
+      await axios.put(`user/:${id}`, { body });
+    } catch (error) {
+      return error instanceof Error ? error.message : "Unknown error";
+    }
+  }
+
+  async deleteUser(id: string) {
+    try {
+      await axios.delete(`user/:${id}`);
+    } catch (error) {
+      return error instanceof Error ? error.message : "Unknown error";
+    }
+  }
+
   static logout(): void {
     localStorage.removeItem("session");
   }
