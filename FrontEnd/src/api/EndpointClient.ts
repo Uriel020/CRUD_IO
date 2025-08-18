@@ -12,21 +12,21 @@ class EndpointClient {
   }
   async createEndpoint(body: EndpointDTO): Promise<any> {
     try {
-      await axios.post("endpoint", { body });
+      await axios.post("endpoint", body);
     } catch (error) {
       return error instanceof Error ? error.message : "Unknown error";
     }
   }
   async updateEndpoint(id: string, body: EndpointDTO): Promise<any> {
     try {
-      await axios.put(`endpoint/:${id}`, { body });
+      await axios.put(`endpoint/${id}`, body);
     } catch (error) {
       return error instanceof Error ? error.message : "Unknown error";
     }
   }
   async deleteEndpoint(id: string): Promise<any> {
     try {
-      await axios.delete(`endpoint/:${id}`);
+      await axios.delete(`endpoint/${id}`);
     } catch (error) {
       return error instanceof Error ? error.message : "Unknown error";
     }

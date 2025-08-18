@@ -27,8 +27,8 @@ class AuthController {
   async handleProfile(req: Request, res: Response): Promise<any> {
     const { id } = req.params as UserParamsDTO;
     try {
-      await this.userService.getProfile(id);
-      return res.status(HttpCode.Ok).json();
+      const profile = await this.userService.getProfile(id);
+      return res.status(HttpCode.Ok).json(profile);
     } catch (error) {
       return handleHttpError(res, error);
     }
