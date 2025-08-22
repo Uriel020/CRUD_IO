@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext, useState } from "react";
 import { AuthClient } from "../api/authClient";
 import type { LoginDTO } from "../DTOs/login";
 import type { RegisterDTO } from "../DTOs/register";
@@ -15,8 +15,18 @@ type AuthContextType = {};
 export const AuthContext = createContext({} as AuthContextType);
 
 export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
-  const loginUser = async (body: LoginDTO) => {};
-  const getProfile = async (id: string) => {};
+  const [isAuthenticate, setIsAuthenticate] = useState<boolean>(false);
+
+  const loginUser = async (body: LoginDTO) => {
+    try {
+      await login(body);
+      setIsAuthenticate(true);
+    } catch (error) {}
+  };
+  const getProfile = async (id: string) => {
+    try {
+    } catch (error) {}
+  };
   const registerUser = async (body: RegisterDTO) => {};
   const updateUser = async (id: string, body: Partial<RegisterDTO>) => {};
   const deleteUser = async (id: string) => {};
@@ -33,6 +43,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
         updateUser,
         deleteUser,
         logoutUser,
+        isAuthenticate,
       }}
     >
       {children}
