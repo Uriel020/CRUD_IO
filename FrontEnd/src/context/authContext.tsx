@@ -19,7 +19,8 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
 
   const loginUser = async (body: LoginDTO) => {
     try {
-      await login(body);
+      const isUser = await login(body);
+      
       setIsAuthenticate(true);
     } catch (error) {}
   };
@@ -50,3 +51,4 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
     </AuthContext.Provider>
   );
 };
+
