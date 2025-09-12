@@ -20,13 +20,21 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
   const loginUser = async (body: LoginDTO) => {
     try {
       const isUser = await login(body);
-      
-      setIsAuthenticate(true);
-    } catch (error) {}
+
+      if (isUser) return setIsAuthenticate(true);
+
+      return setIsAuthenticate(false);
+    } catch (error) {
+      return error instanceof Error ? error.message : "Unknown error";
+    }
   };
-  const getProfile = async (id: string) => {
+  const findProfile = async (id: string) => {
     try {
-    } catch (error) {}
+      const data = await getProfile(id);
+      if (data) return data;
+    } catch (error) {
+      return error instanceof Error ? error.message : "Unknown error";
+    }
   };
   const registerUser = async (body: RegisterDTO) => {};
   const updateUser = async (id: string, body: Partial<RegisterDTO>) => {};
@@ -39,7 +47,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
     <AuthContext.Provider
       value={{
         loginUser,
-        getProfile,
+        findProfile,
         registerUser,
         updateUser,
         deleteUser,
@@ -51,4 +59,3 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
     </AuthContext.Provider>
   );
 };
-

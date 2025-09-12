@@ -4,11 +4,11 @@ import type { RegisterDTO } from "../DTOs/register";
 import axios from "./axiosConfig";
 
 class AuthClient {
-  async login(body: LoginDTO): Promise<void | string> {
+  async login(body: LoginDTO): Promise<boolean | string> {
     try {
       const { data } = await axios.post("login", body);
       localStorage.setItem("session", JSON.stringify(data));
-      return data;
+      return data!!;
     } catch (error) {
       return error instanceof Error ? error.message : "Unknown error";
     }
@@ -25,7 +25,7 @@ class AuthClient {
   async getProfile(id: string): Promise<ProfileDTO | String> {
     try {
       const { data } = await axios.get(`profile/${id}`);
-      return data;
+      return data as ProfileDTO;
     } catch (error) {
       return error instanceof Error ? error.message : "Unknown error";
     }
