@@ -1,5 +1,3 @@
-import rateLimit from 'express-rate-limit';
+import rateLimit from "express-rate-limit";
 
-const limiter = rateLimit({
-    
-})
+export const limiter = rateLimit({});

@@ -4,6 +4,7 @@ import morgan from 'morgan';
 import { resourceRouter } from "../routes/resource.route";
 import { endpointRouter } from "../routes/endpoint.route";
 import { authRouter } from "../routes/auth.route";
+import { limiter } from "../middlewares/rateLimit";
 
 const origin: StaticOrigin = [""]; //pending
 
@@ -15,6 +16,9 @@ app.use(json());
 const corsOptions: CorsOptions = { origin, credentials: true };
 
 app.use(cors(corsOptions));
+
+//Implement rate limiter to all requests
+app.use(limiter);
 
 //Morgan config --> http requests 
 app.use(morgan('dev'));
