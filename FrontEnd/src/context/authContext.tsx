@@ -36,9 +36,28 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
       return error instanceof Error ? error.message : "Unknown error";
     }
   };
-  const registerUser = async (body: RegisterDTO) => {};
-  const updateUser = async (id: string, body: Partial<RegisterDTO>) => {};
-  const deleteUser = async (id: string) => {};
+  const registerUser = async (body: RegisterDTO) => {
+    try {
+      register(body);
+    } catch (error) {
+      return error instanceof Error ? error.message : "Unknown error";
+    }
+  };
+  const modifyUser = async (id: string, body: Partial<RegisterDTO>) => {
+    try {
+      updateUser(id, body);
+    } catch (error) {
+      return error instanceof Error ? error.message : "Unknown error";
+    }
+  };
+  const clearUser = async (id: string) => {
+    try {
+      deleteUser(id);
+    } catch (error) {
+      return error instanceof Error ? error.message : "Unknown error";
+    }
+  };
+
   const logoutUser = () => {
     logout();
   };
@@ -49,8 +68,8 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
         loginUser,
         findProfile,
         registerUser,
-        updateUser,
-        deleteUser,
+        modifyUser,
+        clearUser,
         logoutUser,
         isAuthenticate,
       }}
